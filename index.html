@@ -1,0 +1,678 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABC Adventure - Petualangan Huruf</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --purple: #8065cf;
+  --pink: #ff91b5;
+  --yellow: #ffcf59;
+  --blue: #74c9ec;
+  --green: #83d9a1;
+  --dark: #493c68;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Baloo 2', cursive;
+  color: var(--dark);
+  background: linear-gradient(180deg,#c8efff,#f1e9ff,#fff0df);
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+header {
+  padding: 14px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 800;
+  color: #7655c4;
+}
+
+.logo span { color: #ff9c46; }
+
+.stars {
+  background: white;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 800;
+  box-shadow: 0 4px 12px #8065cf20;
+}
+
+.container {
+  max-width: 1050px;
+  margin: auto;
+  padding: 15px 20px 45px;
+}
+
+.hero {
+  text-align: center;
+  padding: 28px 10px 22px;
+}
+
+.hero h1 {
+  font-size: clamp(34px,7vw,65px);
+  line-height: 1.1;
+  margin: 5px 0;
+  color: #7655c4;
+  text-shadow: 2px 3px white;
+}
+
+.hero p {
+  font-size: 19px;
+  margin: 8px;
+}
+
+.mascot {
+  font-size: 76px;
+  margin: 5px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  50% { transform: translateY(-10px) rotate(4deg); }
+}
+
+.section-title {
+  text-align: center;
+  font-size: 27px;
+  margin: 20px 0 12px;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 17px;
+}
+
+.menu-card {
+  padding: 22px 12px;
+  border-radius: 24px;
+  text-align: center;
+  background: white;
+  box-shadow: 0 7px 0 #0000000c;
+  transition: .2s;
+}
+
+.menu-card:hover {
+  transform: translateY(-6px);
+}
+
+.menu-card .emoji { font-size: 52px; }
+
+.menu-card h3 {
+  margin: 4px 0;
+  font-size: 21px;
+}
+
+.menu-card p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.menu-card:nth-child(1) { border-bottom: 7px solid var(--pink); }
+.menu-card:nth-child(2) { border-bottom: 7px solid var(--yellow); }
+.menu-card:nth-child(3) { border-bottom: 7px solid var(--green); }
+
+.panel {
+  display: none;
+  background: white;
+  border-radius: 28px;
+  padding: 25px;
+  margin-top: 25px;
+  text-align: center;
+  box-shadow: 0 8px 25px #493c6812;
+  animation: appear .3s ease;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.panel.active { display: block; }
+
+.back {
+  background: #eee9fa;
+  color: var(--purple);
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-weight: 700;
+  float: left;
+}
+
+.panel h2 { font-size: 29px; }
+
+.alphabet-grid {
+  display: grid;
+  grid-template-columns: repeat(6,1fr);
+  gap: 10px;
+  clear: both;
+  padding-top: 15px;
+}
+
+.letter {
+  background: #f1edff;
+  color: #7557bf;
+  font-size: 27px;
+  font-weight: 800;
+  border-radius: 16px;
+  padding: 12px 3px;
+  box-shadow: 0 4px 0 #ded3fa;
+  transition: .2s;
+}
+
+.letter:hover {
+  background: #ffe4ef;
+  transform: scale(1.08);
+}
+
+.lesson-emoji {
+  font-size: 105px;
+  margin: 8px;
+}
+
+.big-letter {
+  font-size: 95px;
+  font-weight: 800;
+  color: #805fc9;
+  line-height: 1;
+}
+
+.lesson-word {
+  font-size: 29px;
+  font-weight: 800;
+  color: #f29b43;
+}
+
+.action-btn {
+  padding: 12px 25px;
+  margin: 7px;
+  border-radius: 30px;
+  font-size: 17px;
+  font-weight: 800;
+  background: var(--purple);
+  color: white;
+  box-shadow: 0 4px 0 #6047a5;
+}
+
+.action-btn:active {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.blue { background: var(--blue); box-shadow: 0 4px 0 #4eabd0; }
+.pink { background: var(--pink); box-shadow: 0 4px 0 #e46d98; }
+.green { background: var(--green); box-shadow: 0 4px 0 #53b77a; }
+
+.question {
+  background: #fff7e5;
+  border-radius: 22px;
+  padding: 18px;
+  margin: 15px auto;
+  max-width: 480px;
+}
+
+.question-emoji { font-size: 100px; }
+
+.options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.option {
+  width: 85px;
+  height: 85px;
+  border-radius: 20px;
+  background: #eee9ff;
+  color: #7555bd;
+  font-size: 37px;
+  font-weight: 800;
+  box-shadow: 0 4px 0 #d6caf8;
+}
+
+.option:hover { background: #ffe4ef; }
+
+.feedback {
+  font-size: 23px;
+  font-weight: 800;
+  min-height: 38px;
+  margin: 15px 0;
+}
+
+.progress {
+  height: 13px;
+  background: #eee9f7;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg,#80dca2,#53c9dc);
+  transition: .4s;
+}
+
+.footer {
+  text-align: center;
+  padding: 25px;
+  font-size: 14px;
+  color: #85799f;
+}
+
+@media(max-width:600px) {
+  .menu { grid-template-columns: 1fr; }
+  .alphabet-grid { grid-template-columns: repeat(4,1fr); }
+  .panel { padding: 17px 12px; }
+  .hero p { font-size: 16px; }
+  header { padding: 12px 5%; }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🌈 ABC <span>ADVENTURE</span></div>
+  <div class="stars">⭐ <span id="starCount">0</span> Stars</div>
+</header>
+
+<div class="container">
+
+<section class="hero">
+  <div class="mascot">🧸</div>
+  <h1>ABC Adventure!</h1>
+  <p>Yuk, bertualang dan belajar huruf bersama!</p>
+  <p>✨ Belajar itu menyenangkan! ✨</p>
+</section>
+
+<h2 class="section-title">🎮 Pilih Petualanganmu!</h2>
+
+<div class="menu" id="mainMenu">
+
+  <button class="menu-card" onclick="showPanel('alphabet')">
+    <div class="emoji">🔤</div>
+    <h3>Kenali Huruf</h3>
+    <p>Belajar A sampai Z</p>
+  </button>
+
+  <button class="menu-card" onclick="startQuiz()">
+    <div class="emoji">🧩</div>
+    <h3>Tebak Gambar</h3>
+    <p>Temukan huruf yang benar</p>
+  </button>
+
+  <button class="menu-card" onclick="startSound()">
+    <div class="emoji">🔊</div>
+    <h3>Dengar & Tebak</h3>
+    <p>Dengarkan nama benda</p>
+  </button>
+
+</div>
+
+<!-- PANEL ALFABET -->
+
+<section class="panel" id="alphabet">
+  <button class="back" onclick="goHome()">← Kembali</button>
+  <h2>🌟 Galeri Huruf</h2>
+  <p>Tekan huruf untuk belajar!</p>
+  <div class="alphabet-grid" id="alphabetGrid"></div>
+  <div id="lesson"></div>
+</section>
+
+<!-- PANEL KUIS -->
+
+<section class="panel" id="quiz">
+  <button class="back" onclick="goHome()">← Kembali</button>
+  <h2>🧩 Tebak Huruf!</h2>
+  <p id="quizNumber">Pertanyaan 1</p>
+  <div class="progress"><div class="progress-fill" id="quizProgress"></div></div>
+  <div class="question">
+    <div class="question-emoji" id="quizEmoji">🍎</div>
+    <h3 id="quizQuestion">Apa huruf awal dari Apel?</h3>
+  </div>
+  <div class="options" id="quizOptions"></div>
+  <div class="feedback" id="quizFeedback"></div>
+  <button class="action-btn" id="nextQuiz" onclick="nextQuestion()" style="display:none">
+    Selanjutnya ➜
+  </button>
+</section>
+
+<!-- PANEL SUARA -->
+
+<section class="panel" id="sound">
+  <button class="back" onclick="goHome()">← Kembali</button>
+  <h2>🔊 Dengarkan & Tebak!</h2>
+  <p>Dengarkan nama benda, lalu pilih gambarnya!</p>
+  <div class="question">
+    <div style="font-size:65px">🎧</div>
+    <button class="action-btn blue" onclick="playSoundQuestion()">▶ Dengarkan</button>
+    <p id="soundHint">Tekan tombol untuk mendengarkan petunjuk.</p>
+  </div>
+  <div class="options" id="soundOptions"></div>
+  <div class="feedback" id="soundFeedback"></div>
+  <button class="action-btn" id="nextSound" onclick="newSoundQuestion()" style="display:none">
+    Soal Berikutnya ➜
+  </button>
+</section>
+
+</div>
+
+<div class="footer">
+  🌈 ABC Adventure · Let's Learn and Play! 🧸
+</div>
+
+<script>
+
+// DATA ALFABET
+
+const alphabet = [
+ ["A","Apel","🍎"],
+ ["B","Bola","⚽"],
+ ["C","Ceri","🍒"],
+ ["D","Domba","🐑"],
+ ["E","Elang","🦅"],
+ ["F","Flamingo","🦩"],
+ ["G","Gajah","🐘"],
+ ["H","Harimau","🐯"],
+ ["I","Ikan","🐟"],
+ ["J","Jeruk","🍊"],
+ ["K","Kucing","🐱"],
+ ["L","Lebah","🐝"],
+ ["M","Mobil","🚗"],
+ ["N","Nanas","🍍"],
+ ["O","Obor","🔦"],
+ ["P","Pisang","🍌"],
+ ["Q","Quran","📖"],
+ ["R","Rusa","🦌"],
+ ["S","Sapi","🐄"],
+ ["T","Tomat","🍅"],
+ ["U","Ular","🐍"],
+ ["V","Vas","🏺"],
+ ["W","Wortel","🥕"],
+ ["X","Xilofon","🎼"],
+ ["Y","Yoyo","🪀"],
+ ["Z","Zebra","🦓"]
+];
+
+let stars = Number(localStorage.getItem("abcStars") || 0);
+let currentLetter = null;
+let quizIndex = 0;
+let quizScore = 0;
+let quizQuestions = [];
+let soundAnswer = null;
+let soundAnswered = false;
+
+updateStars();
+
+// NAVIGASI
+
+function showPanel(id) {
+  document.getElementById("mainMenu").style.display = "none";
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function goHome() {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.getElementById("mainMenu").style.display = "grid";
+  speechSynthesis.cancel();
+}
+
+// BINTANG
+
+function addStar() {
+  stars++;
+  localStorage.setItem("abcStars", stars);
+  updateStars();
+}
+
+function updateStars() {
+  document.getElementById("starCount").textContent = stars;
+}
+
+// SUARA
+
+function speak(text) {
+  if (!("speechSynthesis" in window)) {
+    alert("Browser ini belum mendukung fitur suara.");
+    return;
+  }
+
+  speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "id-ID";
+  utterance.rate = 0.8;
+  utterance.pitch = 1.15;
+
+  speechSynthesis.speak(utterance);
+}
+
+// GALERI ALFABET
+
+const alphabetGrid = document.getElementById("alphabetGrid");
+
+alphabet.forEach(item => {
+  const button = document.createElement("button");
+  button.className = "letter";
+  button.textContent = item[0];
+  button.onclick = () => showLetter(item);
+  alphabetGrid.appendChild(button);
+});
+
+function showLetter(item) {
+  currentLetter = item;
+
+  document.getElementById("lesson").innerHTML = `
+    <div class="lesson-emoji">${item[2]}</div>
+    <div class="big-letter">${item[0]} ${item[0].toLowerCase()}</div>
+    <div class="lesson-word">${item[1]}</div>
+    <button class="action-btn blue" onclick="speak('${item[0]}')">
+      🔊 Dengarkan Huruf
+    </button>
+    <button class="action-btn pink" onclick="speak('${item[1]}')">
+      🗣 Dengarkan Kata
+    </button>
+  `;
+
+  speak(item[0] + ". " + item[1]);
+}
+
+// FUNGSI ACAK
+
+function shuffle(array) {
+  return [...array].sort(() => Math.random() - 0.5);
+}
+
+// GAME TEBAK GAMBAR
+
+function startQuiz() {
+  showPanel("quiz");
+  quizQuestions = shuffle(alphabet).slice(0,10);
+  quizIndex = 0;
+  quizScore = 0;
+  showQuestion();
+}
+
+function showQuestion() {
+  const item = quizQuestions[quizIndex];
+
+  document.getElementById("quizNumber").textContent =
+    `Pertanyaan ${quizIndex+1} dari 10`;
+
+  document.getElementById("quizProgress").style.width =
+    (quizIndex / 10 * 100) + "%";
+
+  document.getElementById("quizEmoji").textContent = item[2];
+  document.getElementById("quizQuestion").textContent =
+    `Apa huruf awal dari ${item[1]}?`;
+
+  document.getElementById("quizFeedback").textContent = "";
+  document.getElementById("nextQuiz").style.display = "none";
+
+  const choices = shuffle([
+    item,
+    ...shuffle(alphabet.filter(a => a[0] !== item[0])).slice(0,2)
+  ]);
+
+  const options = document.getElementById("quizOptions");
+  options.innerHTML = "";
+
+  choices.forEach(choice => {
+    const button = document.createElement("button");
+    button.className = "option";
+    button.textContent = choice[0];
+    button.onclick = () => checkAnswer(choice[0],item[0]);
+    options.appendChild(button);
+  });
+
+  setTimeout(() => speak(`Apa huruf awal dari ${item[1]}?`),300);
+}
+
+function checkAnswer(answer,correct) {
+  const buttons = document.querySelectorAll("#quizOptions button");
+  buttons.forEach(b => b.disabled = true);
+
+  const feedback = document.getElementById("quizFeedback");
+
+  if(answer === correct) {
+    feedback.textContent = "🎉 Hebat! Jawabanmu benar!";
+    feedback.style.color = "#38ae70";
+    quizScore++;
+    addStar();
+    speak("Hebat! Jawabanmu benar!");
+  } else {
+    feedback.textContent = `😊 Belum tepat. Jawabannya ${correct}.`;
+    feedback.style.color = "#e78b56";
+    speak(`Belum tepat. Jawabannya ${correct}`);
+  }
+
+  document.getElementById("nextQuiz").style.display = "inline-block";
+}
+
+function nextQuestion() {
+  quizIndex++;
+
+  if(quizIndex < 10) {
+    showQuestion();
+  } else {
+    showQuizResult();
+  }
+}
+
+function showQuizResult() {
+  document.getElementById("quizProgress").style.width = "100%";
+  document.getElementById("quizNumber").textContent = "Petualangan selesai!";
+  document.getElementById("quizOptions").innerHTML = "";
+  document.getElementById("quizEmoji").textContent = "🏆";
+  document.getElementById("quizQuestion").textContent =
+    `Kamu menjawab ${quizScore} dari 10 soal dengan benar!`;
+  document.getElementById("quizFeedback").textContent =
+    quizScore >= 8 ? "🌟 Luar biasa! Kamu hebat!" : "💖 Terus belajar, ya!";
+  document.getElementById("nextQuiz").textContent = "Main Lagi 🔄";
+  document.getElementById("nextQuiz").onclick = startQuiz;
+  document.getElementById("nextQuiz").style.display = "inline-block";
+
+  speak(`Petualangan selesai. Kamu mendapat ${quizScore} jawaban benar dari sepuluh soal.`);
+}
+
+// GAME DENGARKAN DAN TEBAK
+
+function startSound() {
+  showPanel("sound");
+  newSoundQuestion();
+}
+
+function newSoundQuestion() {
+  soundAnswered = false;
+  document.getElementById("soundFeedback").textContent = "";
+  document.getElementById("nextSound").style.display = "none";
+
+  soundAnswer = alphabet[Math.floor(Math.random()*alphabet.length)];
+
+  const choices = shuffle([
+    soundAnswer,
+    ...shuffle(alphabet.filter(a => a[0] !== soundAnswer[0])).slice(0,2)
+  ]);
+
+  const options = document.getElementById("soundOptions");
+  options.innerHTML = "";
+
+  choices.forEach(item => {
+    const button = document.createElement("button");
+    button.className = "option";
+    button.textContent = item[2];
+    button.setAttribute("aria-label",item[1]);
+    button.onclick = () => checkSound(item);
+    options.appendChild(button);
+  });
+
+  document.getElementById("soundHint").textContent =
+    "Dengarkan petunjuk, lalu pilih gambar yang benar!";
+
+  setTimeout(playSoundQuestion,400);
+}
+
+function playSoundQuestion() {
+  if(soundAnswer) {
+    speak(soundAnswer[1]);
+  }
+}
+
+function checkSound(item) {
+  if(soundAnswered) return;
+  soundAnswered = true;
+
+  const feedback = document.getElementById("soundFeedback");
+
+  if(item[0] === soundAnswer[0]) {
+    feedback.textContent = "🎉 Pintar sekali! Benar!";
+    feedback.style.color = "#38ae70";
+    addStar();
+    speak("Pintar sekali! Benar!");
+  } else {
+    feedback.textContent = `😊 Jawabannya adalah ${soundAnswer[1]}`;
+    feedback.style.color = "#e78b56";
+    speak(`Jawabannya adalah ${soundAnswer[1]}`);
+  }
+
+  document.getElementById("nextSound").style.display = "inline-block";
+}
+
+// HENTIKAN SUARA SAAT PINDAH HALAMAN
+
+window.addEventListener("beforeunload", () => {
+  speechSynthesis.cancel();
+});
+
+</script>
+
+</body>
+</html>
